@@ -1,43 +1,60 @@
 package com.training.lfallon.activitylifecycle1;
 
-import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener{
 
     private View button;
     private TextView textView;
+    private EditText input;
+
     private int counter = 0;
-    private static final String BUNDLE_COUNTER = "BUNDLE_COUNTER";
+    public static final int REQUEST_SELECT_CONTACT = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        if(savedInstanceState != null){
-            counter = savedInstanceState.getInt(BUNDLE_COUNTER);
-        }
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         button = findViewById(R.id.activity_main_button);
         textView = (TextView)findViewById(R.id.activity_main_text);
+        input = (EditText)findViewById(R.id.activity_main_editText);
 
         button.setOnClickListener(this);
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putInt(BUNDLE_COUNTER, counter);
+    public void onClick(View v) {
+        if(v.getId() == R.id.activity_main_button){
+            Intent intent = new Intent(this, SelectContactActivity.class);
+            intent.putExtra(SelectContactActivity.EXTRA_TITLE, input.getText().toString());
+            startActivityForResult(intent, REQUEST_SELECT_CONTACT);
+        }
     }
 
+    /**
+     * One of few over-rideable methods that will not throw error if super not called
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
-    public void onClick(View v) {
-        counter++;
-        textView.setText(Integer.toString(counter));
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == REQUEST_SELECT_CONTACT){
+            if(resultCode == RESULT_OK){
+                String contact = data.getStringExtra(SelectContactActivity.RESULT_CONTACT_NAME).toString();
+                textView.setText("You selected " + contact);
+            }
+            else{
+                textView.setText("Error...");
+            }
+        }
+        else{
+            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 }
