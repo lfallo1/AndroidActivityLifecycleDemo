@@ -10,11 +10,12 @@ public class SelectContactActivity extends BaseActivity implements View.OnClickL
 
     public static final String EXTRA_TITLE = "EXTRA_TITLE";
     public static final String RESULT_CONTACT_NAME = "RESULT_CONTACT_NAME";
+    private static final int REQUEST_SEARCH_CONTACT = 1;
 
     private View contact1;
     private View contact2;
     private View contact3;
-
+    private View searchButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,16 +25,30 @@ public class SelectContactActivity extends BaseActivity implements View.OnClickL
         contact1 = findViewById(R.id.activity_select_contact_contact1);
         contact2 = findViewById(R.id.activity_select_contact_contact2);
         contact3= findViewById(R.id.activity_select_contact_contact3);
+        searchButton = findViewById(R.id.activity_select_contact_search);
 
         contact1.setOnClickListener(this);
         contact2.setOnClickListener(this);
         contact3.setOnClickListener(this);
+        searchButton.setOnClickListener(this);
 
         TextView title = (TextView)findViewById(R.id.activity_select_contact_title);
         String titleFromIntent = getIntent().getStringExtra(EXTRA_TITLE);
         title.setText(titleFromIntent);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == REQUEST_SEARCH_CONTACT){
+            if(resultCode == RESULT_OK){
+                String contact = data.getStringExtra(SearchContactActivity.RESULT_CONTACT_NAME);
+                selectContact(contact);
+            }
+        }
+        else{
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
 
     @Override
     public void onClick(View v) {
@@ -45,6 +60,10 @@ public class SelectContactActivity extends BaseActivity implements View.OnClickL
         }
         else if(v == contact3){
             selectContact("Contact 3");
+        }
+        else if(v == searchButton){
+            Intent intent = new Intent(this, SearchContactActivity.class);
+            startActivityForResult(intent, REQUEST_SEARCH_CONTACT);
         }
     }
 
