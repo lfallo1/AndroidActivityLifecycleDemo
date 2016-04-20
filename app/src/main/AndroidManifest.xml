@@ -8,7 +8,10 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".LoginActivity" />
+        <activity
+            android:name=".MainActivity"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -16,7 +19,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".SelectContactActivity" />
-        <activity android:name=".SearchContactActivity"></activity>
+        <activity android:name=".SearchContactActivity" />
     </application>
 
 </manifest>

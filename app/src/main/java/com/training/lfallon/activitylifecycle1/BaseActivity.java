@@ -1,10 +1,13 @@
 package com.training.lfallon.activitylifecycle1;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 public abstract class BaseActivity extends AppCompatActivity {
+
+    public static Boolean isLoggedIn = false;
 
     private String tag;
 
@@ -12,6 +15,13 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         tag = getClass().getSimpleName();
+        if(!isLoggedIn && getClass() != LoginActivity.class){
+            Log.e(tag, "-- onCreaate being replaced with LoginActivity");
+            startActivity(new Intent(this, LoginActivity.class));
+            finish(); //finish activity that launched current activity
+            return;
+        }
+
         Log.e(tag, "--- OnCreate");
     }
 

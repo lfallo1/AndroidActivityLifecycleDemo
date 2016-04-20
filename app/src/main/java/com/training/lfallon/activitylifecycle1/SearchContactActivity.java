@@ -1,7 +1,6 @@
 package com.training.lfallon.activitylifecycle1;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -19,8 +18,10 @@ public class SearchContactActivity extends BaseActivity {
         input = (EditText)findViewById(R.id.activity_search_contact_input);
         View search = findViewById(R.id.activity_search_contact_searchButton);
         View cancel = findViewById(R.id.activity_search_contact_cancelButton);
+        View mainActivity = findViewById(R.id.activity_search_contact_mainActivityButton);
         search.setOnClickListener(new SearchButtonHandler());
         cancel.setOnClickListener(new CancelButtonHandler());
+        mainActivity.setOnClickListener(new MainActivityButtonHandler());
     }
 
     private class SearchButtonHandler implements View.OnClickListener{
@@ -39,6 +40,14 @@ public class SearchContactActivity extends BaseActivity {
         @Override
         public void onClick(View v) {
             setResult(RESULT_CANCELED);
+            finish();
+        }
+    }
+
+    private class MainActivityButtonHandler implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            startActivity(new Intent(SearchContactActivity.this, MainActivity.class));
             finish();
         }
     }

@@ -12,11 +12,20 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="Welcome, username"
+        android:textColor="@color/colorPrimaryDark"
+        android:id="@+id/activity_main_welcomeText"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:padding="16dp"
         android:background="#333333"
         android:textColor="#ffffff"
         android:id="@+id/activity_main_text"
-        android:text="Not yet set"/>
+        android:text="Not yet set"
+        android:layout_below="@id/activity_main_welcomeText"/>
 
     <EditText
         android:layout_width="match_parent"
@@ -28,8 +37,15 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Click here"
+        android:text="Logout"
         android:layout_alignParentBottom="true"
-        android:id="@+id/activity_main_button"/>
+        android:id="@+id/activity_main_logoutButton"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Click here"
+        android:id="@+id/activity_main_button"
+        android:layout_above="@id/activity_main_logoutButton"/>
 
 </RelativeLayout>
